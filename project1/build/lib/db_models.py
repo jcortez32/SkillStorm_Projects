@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from sqlalchemy import ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from flaskr.extensions import db
+from Project1_Company_Management.flaskr.extensions import db
 
 #Analysts should be able to add a tracked company by specifying its ticker symbol, name, and sector
 class CompanyRecord(db.Model):

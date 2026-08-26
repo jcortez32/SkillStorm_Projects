@@ -1,3 +1,0 @@
-flaskr
-instance
-main
