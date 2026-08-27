@@ -2,6 +2,7 @@ pyproject.toml
 src/__init__.py
 src/db_models.py
 src/extensions.py
+src/model_validators.py
 src/routes.py
 src/store.py
 src/Project_1.egg-info/PKG-INFO

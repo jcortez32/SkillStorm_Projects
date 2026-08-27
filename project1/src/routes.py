@@ -1,5 +1,6 @@
 #initalizing the different routes our application may receive
 from flask import Blueprint, jsonify
+from store import list_companies
 main_bp = Blueprint('main',__name__) 
 
 #GET Commands
@@ -11,9 +12,13 @@ COMPANY_API_PREFIX = '/comp'
 
 @main_bp.get(f"{COMPANY_API_PREFIX}")
 def ping():
-    return jsonify(status="ok")
+    companies = list_companies()
+    print('company_data:')
+    print(companies)
+    result = jsonify(count=len(companies), items = [c.model_dump(mode="json") for c in companies])
+    return result
 
 #POST Commands
-@main_bp.post('')
+@main_bp.post('/')
 def create_new_company():
-    pass
+    return jsonify(status="ok")

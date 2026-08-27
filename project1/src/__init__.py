@@ -6,7 +6,6 @@ from src.routes import main_bp
 
 #creating and configuring flask app. Uses the factory pattern to create and return a new Flask app
 def create_app():
-    from src import db_models
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]  
     db.init_app(app) 
