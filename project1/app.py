@@ -1,4 +1,4 @@
-from src import create_app
+from project1 import create_app
 
 app = create_app()
 

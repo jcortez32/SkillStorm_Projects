@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from sqlalchemy import ForeignKey, String, Text, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from src.extensions import db
+from project1.extensions import db
 
 #Analysts should be able to add a tracked company by specifying its ticker symbol, name, and sector
 class CompanyRecord(db.Model):
@@ -12,7 +12,7 @@ class CompanyRecord(db.Model):
     sector: Mapped[str] = mapped_column(String(100),nullable=False)
 
     #store company metadata
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    #created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
     def __repr__(self):
         return f'Company Name: {self.name}'

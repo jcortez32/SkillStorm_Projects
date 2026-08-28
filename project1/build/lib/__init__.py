@@ -1,10 +1,10 @@
 from flask import Flask
 from pydantic import ValidationError
-from src.extensions import db
+from Company_Management.extensions import db
 from flask_migrate import Migrate
 from flask import jsonify
 import os
-from src.routes import comp_bp
+from Company_Management.routes import comp_bp
 migrate = Migrate()
 
 #creating and configuring flask app. Uses the factory pattern to create and return a new Flask app
