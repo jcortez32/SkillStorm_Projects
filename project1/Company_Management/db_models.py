@@ -6,7 +6,7 @@ from project1.extensions import db
 #Analysts should be able to add a tracked company by specifying its ticker symbol, name, and sector
 class CompanyRecord(db.Model):
     __tablename__ = "company_record"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    company_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     symbol: Mapped[str] = mapped_column(String(100),nullable=False)
     name: Mapped[str] = mapped_column(String(100),nullable=False)
     sector: Mapped[str] = mapped_column(String(100),nullable=False)

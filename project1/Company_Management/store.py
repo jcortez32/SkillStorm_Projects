@@ -13,7 +13,7 @@ from project1.Company_Management.model_validators import CreateCompanyDTO, Updat
 """ returns all companies """
 def list_companies():
     # stmt creates the sql query
-    stmt = select(CompanyRecord).order_by(CompanyRecord.id)
+    stmt = select(CompanyRecord).order_by(CompanyRecord.company_id)
     rows = db.session.execute(stmt).scalars()
     result = [Company.model_validate(row) for row in rows]
     return result
@@ -25,41 +25,34 @@ def create_company(comp:dict):
     db.session.commit()
     return Company.model_validate(record) # setting status code as 201 - CREATED
 
-def delete_company(company_id:int):
+def delete_company(company_id:int) -> bool:
     if type(company_id) is str:
         company_id = int(company_id)
+    record = db.session.get(CompanyRecord, company_id) 
+    if record is None:
+        return False 
     stmt = delete(CompanyRecord).where(CompanyRecord.id==company_id)
     print('--- SQL COMMAND FOR DELETE ---')
     print(stmt)
-    print(stmt.compile().params)
     db.session.execute(stmt)
     db.session.commit()
-    #return result
+    return True
 
-#cannot change ticker symbol 
-# def update_company(company_id:int):
-#     stmt = update(CompanyRecord).where(CompanyRecord.id==company_id).values(name="change")
-#     print('--- SQL COMMAND FOR UPDATE ---')
-#     print(stmt)
-#     db.session.execute(stmt)
-
-
-def update_company(company_id: int, comp: dict):
+def update_company(company_id: int, comp: dict) -> bool:
     valid_company = UpdateCompanyDTO.model_validate(comp)
     # find the record in the DB
     record = db.session.get(CompanyRecord, company_id)
     if record is None:
-        return None     # return none if no record found
-    # update all the values
+        return False    
+    # update all the values as needed
     if valid_company.name is not None:
         record.name = valid_company.name
     if valid_company.sector is not None:
         record.sector = valid_company.sector
-    # commit the updated values
     db.session.commit()
     # return ticket with new values
     result = db.session.get(CompanyRecord, company_id)
-    return Company.model_validate(record)
+    return Company.model_validate(result)
     return Ticket.model_validate(record)
     
 
