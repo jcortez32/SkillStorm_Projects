@@ -29,6 +29,7 @@ def analyze_sentiment(text: str) -> dict:
         } 
 
 def detect_key_phrases(text: str):
+    """ use Amazon comprehend to determine key phrases of text"""
     response = get_client("comprehend").detect_key_phrases(
         Text=text,
         LanguageCode="en"

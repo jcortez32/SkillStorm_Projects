@@ -18,11 +18,11 @@
                 <fieldset>
                     <form action="{{url_for("main.create_new_company_via_web")}}" method="post">
                     <label for="symbol">Ticker Symbol:</label>
-                    <input type="text" id="symbol" name="symbol" placeholder="symbol">
+                    <input type="text" id="symbol" name="symbol" placeholder="symbol" required>
                     <label for="name">Company Name:</label>
-                    <input type="text" id="name" name="name" placeholder="name">
+                    <input type="text" id="name" name="name" placeholder="name" required>
                     <label for="name">Sector:</label>
-                    <input type="text" id="sector" name="sector" placeholder="name">
+                    <input type="text" id="sector" name="sector" placeholder="name" required>
                     <button type="submit">Add Company</button>
                     </form>
                  </fieldset>   
@@ -43,8 +43,5 @@
                     <button type="submit">Add Press</button>
                     </form>
                 </fieldset>
-                <form action="{{url_for("company.retrieve_companies")}}" method="get" id="getComp">
-                    <button type="submit" >View Companies</button>
-                </form>
             </body>
             

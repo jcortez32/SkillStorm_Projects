@@ -17,11 +17,10 @@ def list_press(company_id:int, sentiment:Optional[str], start_date:Optional[date
     record = db.session.get(CompanyRecord, company_id) 
     if record is None:
         return False 
-    stmt = select(PressRecord).join(CompanyRecord, PressRecord.company_id == CompanyRecord.company_id).where(PressRecord.company_id == int(company_id))
-
+    stmt = select(PressRecord, SentimentRecord.sentiment).outerjoin(SentimentRecord, PressRecord.id==SentimentRecord.press_id).where(PressRecord.company_id == company_id)
     #filter by sentiment 
     if sentiment is not None:
-        stmt = stmt.join(SentimentRecord, PressRecord.id == SentimentRecord.press_id).where(SentimentRecord.sentiment == sentiment)
+        stmt = stmt.where(SentimentRecord.sentiment == sentiment)
 
     #filter by start_date and end date
     if start_date is not None:
@@ -30,8 +29,20 @@ def list_press(company_id:int, sentiment:Optional[str], start_date:Optional[date
     if end_date is not None:
         stmt = stmt.where(PressRecord.published_date <= end_date)
 
-    rows = db.session.execute(stmt).scalars()
-    result = [Press.model_validate(row) for row in rows]
+    rows = db.session.execute(stmt).all()
+    result = []
+    for press_obj, sentiment_str in rows:
+        extracted_texts = [phrase["Text"] for phrase in press_obj.key_phrases]
+        press_dict = {
+            "id": press_obj.id,
+            "headline": press_obj.headline,
+            "body_test": press_obj.body_test,
+            "published_date": press_obj.published_date,
+            "company_id": press_obj.company_id,
+            "key_phrases": extracted_texts,
+            "sentiment": sentiment_str
+        }
+        result.append(Press.model_validate(press_dict))
     return result
 
 def create_press(press:dict,company_id:str):

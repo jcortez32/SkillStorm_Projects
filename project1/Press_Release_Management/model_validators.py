@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select, text
 from datetime import datetime
+from typing import Optional, List, Dict, Any
 class Press(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id:int 
@@ -8,6 +9,8 @@ class Press(BaseModel):
     body_test:str
     published_date:datetime
     company_id:int
+    key_phrases: Optional[List[str]] = None
+    sentiment: Optional[str] = None
 
 
 class CreatePressDTO(BaseModel):
