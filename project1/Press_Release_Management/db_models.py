@@ -10,7 +10,7 @@ class PressRecord(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     headline: Mapped[str] = mapped_column(String(100),nullable=False)
     body_test: Mapped[str] = mapped_column(String(5000),nullable=False)
-    published_date:Mapped[datetime] = mapped_column(DateTime()) #2026-08-28 19:44:00
+    published_date:Mapped[datetime] = mapped_column(DateTime()) #eg. 2026-08-28 
     company_id: Mapped[int] = mapped_column(INTEGER())
     key_phrases: Mapped[dict] = mapped_column(JSONB(), nullable=True)
     def __repr__(self):

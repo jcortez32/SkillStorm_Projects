@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <link href="style.css" type="text/css" rel="stylesheet">
+            <meta charset="utf-8">
+            <meta name="Company + Press Management" content="Press Release Management">
+            <title> Press Release Sentiment Tracker </title>
+        </head>
+        <body>
+            <header>
+                <h1>Press Release Sentiment Tracker</h1>
+            </header>
+            <body>
+                <h1>
+                    Company Management
+                </h1>
+                <p> Use the form below to add a company to the listing. No field should remain blank</p>
+                <fieldset>
+                    <form action="{{url_for("main.create_new_company_via_web")}}" method="post">
+                    <label for="symbol">Ticker Symbol:</label>
+                    <input type="text" id="symbol" name="symbol" placeholder="symbol">
+                    <label for="name">Company Name:</label>
+                    <input type="text" id="name" name="name" placeholder="name">
+                    <label for="name">Sector:</label>
+                    <input type="text" id="sector" name="sector" placeholder="name">
+                    <button type="submit">Add Company</button>
+                    </form>
+                 </fieldset>   
+                <h1>
+                    Press Release Management
+                </h1>
+                <p> Use the form below to add a press release document towards a specific company. Fields can remain blank</p>
+                <fieldset>
+                    <form action="{{url_for("main.create_new_press_via_web")}}" method="post", id="postPress">
+                    <label for="headline">Headline:</label>
+                    <input type="text" id="headline" name="headl">
+                    <label for="name">Body Text:</label>
+                    <input type="text" id="body" name="body">
+                    <label for="name">Published Date:</label>
+                    <input type="date" id="pdate" name="pdate">
+                    <label for="name">Company ID:</label>
+                    <input type="text" id="compID" name="compID">
+                    <button type="submit">Add Press</button>
+                    </form>
+                </fieldset>
+                <form action="{{url_for("company.retrieve_companies")}}" method="get" id="getComp">
+                    <button type="submit" >View Companies</button>
+                </form>
+            </body>
+            
