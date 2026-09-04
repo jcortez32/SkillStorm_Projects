@@ -16,15 +16,16 @@ def retrieve_press(company_id):
     sentiment:str = None
     start_date:datetime = None
     end_date:datetime = None
-    #stmt2 = select(CompanyRecord, func.count(PressRecord.company_id).label('press_count')).select_from(CompanyRecord).outerjoin(PressRecord, CompanyRecord.company_id == PressRecord.company_id).group_by(CompanyRecord.company_id)
-    #filter if desired
+    q_headline:str = None
     if 'sentiment' in body:
         sentiment = body['sentiment']
     if 'start_date' in body:
         start_date = datetime.fromisoformat(body['start_date'])
     if 'end_date' in body:
         end_date = datetime.fromisoformat(body['end_date'])
-    press_files = list_press(int(company_id),sentiment,start_date,end_date)
+    if 'headline' in body:
+        q_headline = body['headline']
+    press_files = list_press(int(company_id),sentiment,start_date,end_date,q_headline)
     if press_files == False:
         return jsonify(error="Company not found"), 404
     result = jsonify(count=len(press_files), items = [p.model_dump(mode="json") for p in press_files])

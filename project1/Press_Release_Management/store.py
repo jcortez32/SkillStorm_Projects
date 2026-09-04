@@ -13,7 +13,7 @@ from project1.Press_Release_Management.model_validators import CreatePressDTO, U
 
 #companies consist of symbol, name, sector and press_release_id
 """ returns all press associated with specified company """
-def list_press(company_id:int, sentiment:Optional[str], start_date:Optional[datetime], end_date:Optional[datetime]):
+def list_press(company_id:int, sentiment:Optional[str], start_date:Optional[datetime], end_date:Optional[datetime], query_headline:Optional[str]):
     record = db.session.get(CompanyRecord, company_id) 
     if record is None:
         return False 
@@ -28,6 +28,9 @@ def list_press(company_id:int, sentiment:Optional[str], start_date:Optional[date
 
     if end_date is not None:
         stmt = stmt.where(PressRecord.published_date <= end_date)
+    #filter by headline
+    if query_headline is not None:
+        stmt = stmt.where(PressRecord.headline.like(f'%{query_headline}%'))
 
     rows = db.session.execute(stmt).all()
     result = []

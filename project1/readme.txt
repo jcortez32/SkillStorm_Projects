@@ -2,7 +2,8 @@ Edge Case Handling:
 1. Comprehend Is Unavailable
     In the case comprehend is unavailable we submit to our database an unknown sentiment values with neutral score 1
 2. MIXED Sentiment Results
-    TBD
+    Mixed sentiment result is counted separately. When determining overall sentiment during a particular month, average scores are calculated
+    for MIXED, POSITIVE, NEGATIVE, NEUTRAL, with the highest average score determining the ultimate sentiment for the month
 3. Future-Dated or Backdated Press Releases
     Future dates for press releases are allowed 
 4. Very Short Release (Headline Only, No Body)
@@ -17,4 +18,12 @@ Notes:
     Deleting a company results in deleting all associated press_releases. Necessary due to foreign key contraint between press_releases and companies
     
     Editing body_text in press_release does not incur sentiment analysis again
+
+How to Run:
+To run the program, please run the following commands
+cd project1
+python -m venv .venv
+.venv\Scripts\Activate.ps1 
+pip install -e .
+flask --app app run
 
